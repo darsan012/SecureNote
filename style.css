@@ -1,0 +1,25 @@
+/* CSS Reset */
+body, header, nav, main, footer, h1, div, img, ul, figure, figcaption, section, article, aside, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+/* Style rules for body*/
+body {
+	display: block;  
+}
+
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 15px;
+}
+
+#notesForm {
+    display: flex;
+}
