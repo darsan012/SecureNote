@@ -24,13 +24,18 @@
     <h2>Create Notes</h2>
     <form id="notesForm">
         <input type="text" id="noteTitle" placeholder="Enter note title here..."> <!--  stores the title of the notes-->
-        <textarea id="myNotes" name="myNotes" placeholder="Enter your note here..."></textarea> <!--  stores the content of the notes-->
+        <textarea id="noteContent" placeholder="Enter your note here..."></textarea> <!--  stores the content of the notes-->
         <button type="submit">Create Note</button>
     </form>
-    <div id="displayNotes" >
-        <h2>My Notes</h2>
-        <div id="noteList"></div>
-    </div>
+    <!-- For displaying the notes -->
+    <h2>My Notes</h2>
+    <div id="noteList"></div>
+
+    <!-- dialog box to edit and delete the note -->
+    <div id="editDialog" style="display: none;">
+        <input type="text" id="editTitle" placeholder="Enter note title here...">
+        <textarea id="editContent" placeholder="Enter your note here..."></textarea>
+      </div>
     </div>
     <script src="script.js"></script>
 </body>
