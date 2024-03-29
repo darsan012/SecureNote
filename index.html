@@ -23,13 +23,13 @@
     <!-- form implementation to store the notes -->
     <h2>Create Notes</h2>
     <form id="notesForm">
-        <input type="text" id="noteTitle" placeholder="Enter note title here...">
-        <textarea id="myNotes" name="myNotes" placeholder="Enter your note here..."></textarea>
+        <input type="text" id="noteTitle" placeholder="Enter note title here..."> <!--  stores the title of the notes-->
+        <textarea id="myNotes" name="myNotes" placeholder="Enter your note here..."></textarea> <!--  stores the content of the notes-->
         <button type="submit">Create Note</button>
     </form>
-    <div id="displayNotes" hidden>
+    <div id="displayNotes" >
         <h2>My Notes</h2>
-        <ul id="noteList"></ul>
+        <div id="noteList"></div>
     </div>
     </div>
     <script src="script.js"></script>
