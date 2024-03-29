@@ -61,20 +61,21 @@ const editNote = (index)=>{
         title: 'Edit Note',
         modal: true,
         buttons:{
-            Save: ()=>{
+            Save: function(){
                 // save value to the respective note
                 note.title = $('#editTitle').val();
                 note.content = $('#editContent').val();
                 // display the notes after saving
                 dispalayNotes();
                 // close dialouge after saving 
-                this.dialog('close');
+                $(this).dialog('close');
             },
-            Cancel: ()=>{
+            Cancel: function(){
                  $(this).dialog('close');
             }
         }
     });
+
 }
 
 // function to handle the deletion of the notes
