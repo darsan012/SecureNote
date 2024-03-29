@@ -23,3 +23,25 @@ body {
 #notesForm {
     display: flex;
 }
+
+#noteList {
+    padding-top: 30px;
+}
+
+.note-item {
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.note-title {
+    font-weight: bold;
+  }
+
+.note-content {
+margin-top: 5px;
+}
+
+.note-actions {
+margin-top: 10px;
+}
