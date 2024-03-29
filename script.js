@@ -1,17 +1,30 @@
+var notes = []; // array to store the notes
 $(document).ready(function () {
-    var notes = []; // array to store the notes
     // display the existing notes
     dispalayNotes();
     // add new notes
+    $('#notesForm').submit((e)=>{
+        e.preventDefault();
+        var title = $('#noteTitle').val();
+        var content = $('#noteContent').val();
+        // validating the input
+        if(title?.length>0 && content?.length>0){
+            var note = {title:title, content:content}; // create the note object
+            notes.push(note);
+            // clear the form
+            dispalayNotes();
+        }
+    })
 });
 
 // function to display the existing notes
 const dispalayNotes = ()=>{
     // empty the display 
-    $('noteList').empty(); // resets the noteList container
+    $('#noteList').empty(); // resets the noteList container
     // iterate over the notes and display them 
     notes.forEach((note, index) => {
         // create div with note-item classname
+        console.log(note);
         var $noteItem = $('<div class="note-item">')
         // append the notes title and content
         $noteItem.append(`<div class="note-title">${note.title}</div>`);
@@ -23,7 +36,15 @@ const dispalayNotes = ()=>{
         // delete button deletes the notes
         var $deleteButton = $('<button class="delete-button">Delete</button>');
         // when edit button is clicked it will call editNote function
-        $editButton.click(()=>editNote(index));
+        $editButton.click(()=>
+        {
+            console.log(index);
+            editNote(index);
+        });
+
+        $noteActions.append($editButton, $deleteButton);
+        $noteItem.append($noteActions);
+        $('#noteList').append($noteItem);
 
     });
 }
