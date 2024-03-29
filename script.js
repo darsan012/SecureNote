@@ -11,9 +11,13 @@ $(document).ready(function () {
         // validating the input
         if(title?.length>0 && content?.length>0){
             var note = {title:title, content:content}; // create the note object
-            notes.push(note);
-            saveNote(); // save the note to the local storage
-            dispalayNotes();
+            // check if there is any existing note with the same title
+            if(!handleSameTitle(title)){
+                notes.push(note);
+                saveNote(); // save the note to the local storage
+                dispalayNotes();
+            }
+            else alert('Note with the same title already exists');
         }
     });
 
@@ -73,12 +77,13 @@ const editNote = (index)=>{
                 // save value to the respective note
                 note.title = $('#editTitle').val();
                 note.content = $('#editContent').val();
-                // display the notes 
+                // check if there is any existing note with the same title
+                if(!handleSameTitle(note.title)){
                 dispalayNotes();
-                // save to the local storage
-                saveNote();
-                // close dialouge after saving 
+                saveNote(); // save the note to the local storage
                 $(this).dialog('close');
+                }
+                else alert('Note with the same title already exists');
             },
             Cancel: function(){
                  $(this).dialog('close');
@@ -108,4 +113,14 @@ const loadNotes = () => {
         }
         dispalayNotes();
     }
+}
+
+// function to handle the notes with same title
+const handleSameTitle = (title)=>{
+    for(var i=0; i<notes.length; i++){
+        if(notes[i].title == title){
+            return true;
+        }
+    }
+    return false;
 }
