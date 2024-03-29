@@ -71,7 +71,7 @@ const editNote = (index)=>{
                 this.dialog('close');
             },
             Cancel: ()=>{
-                this.dialog('close');
+                 $(this).dialog('close');
             }
         }
     });
