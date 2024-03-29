@@ -38,10 +38,12 @@ const dispalayNotes = ()=>{
         // when edit button is clicked it will call editNote function
         $editButton.click(()=>
         {
-            console.log(index);
             editNote(index);
         });
-
+        // when delete button is clicked it will call deleteNote function
+        $deleteButton.click(()=>{
+            deleteNote(index);
+        });
         $noteActions.append($editButton, $deleteButton);
         $noteItem.append($noteActions);
         $('#noteList').append($noteItem);
@@ -73,4 +75,12 @@ const editNote = (index)=>{
             }
         }
     });
+}
+
+// function to handle the deletion of the notes
+const deleteNote = (index)=>{
+    if(confirm('Are you sure you want to delete the selected note?')){
+        notes.splice(index, 1); // removes the particular note from the notes list
+        dispalayNotes();
+    }
 }
