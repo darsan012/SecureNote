@@ -21,8 +21,35 @@ const dispalayNotes = ()=>{
         // editButton edits the notes
         var $editButton = $('<button class="edit-button">Edit</button>');
         // delete button deletes the notes
-        var $deleteButton = $('<button class="delete-button">Delete</button>');        
+        var $deleteButton = $('<button class="delete-button">Delete</button>');
+        // when edit button is clicked it will call editNote function
+        $editButton.click(()=>editNote(index));
 
     });
+}
 
+// function to handle the notes modification
+const editNote = (index)=>{
+    var note = notes[index];
+    // create the dialog using the jquery ui
+    $('#editTitle').val(note.title);
+    $('#editContent').val(note.content);
+    $('#editDialog').dialog({
+        title: 'Edit Note',
+        modal: true,
+        buttons:{
+            Save: ()=>{
+                // save value to the respective note
+                note.title = $('#editTitle').val();
+                note.content = $('#editContent').val();
+                // display the notes after saving
+                dispalayNotes();
+                // close dialouge after saving 
+                this.dialog('close');
+            },
+            Cancel: ()=>{
+                this.dialog('close');
+            }
+        }
+    });
 }
