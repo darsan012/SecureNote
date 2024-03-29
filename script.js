@@ -59,7 +59,6 @@ const dispalayNotes = ()=>{
 
 // function to save notes to the local storage
 const saveNote = () =>{
-    $("#displayHeader").css('display','block');
     localStorage.setItem('notes', JSON.stringify(notes));
     $('#noteTitle, #noteContent').val(''); // Clear form fields
 }
@@ -67,6 +66,7 @@ const saveNote = () =>{
 const editNote = (index)=>{
     var note = notes[index];
     // create the dialog using the jquery ui
+    // var originalTitle = note.title // store the original title
     $('#editTitle').val(note.title);
     $('#editContent').val(note.content);
     $('#editDialog').dialog({
@@ -78,7 +78,7 @@ const editNote = (index)=>{
                 note.title = escapeHtml($('#editTitle').val());
                 note.content = escapeHtml($('#editContent').val());
                 // check if there is any existing note with the same title
-                if(!handleSameTitle(note.title)){
+                if(!handleSameTitle(note.title, index)){
                 dispalayNotes();
                 saveNote(); // save the note to the local storage
                 $(this).dialog('close');
@@ -99,7 +99,6 @@ const deleteNote = (index)=>{
         notes.splice(index, 1); // removes the particular note from the notes list
         dispalayNotes();
         saveNote();
-        $("#displayHeader").css('display','none');
     }
 }
 
@@ -108,17 +107,19 @@ const loadNotes = () => {
     var storedNotes = localStorage.getItem('notes');
     if(storedNotes){
         notes = JSON.parse(storedNotes);
-        if(notes.length > 0){
-            $("#displayHeader").css('display','block');
-        }
         dispalayNotes();
     }
 }
 
 // function to handle the notes with same title
-const handleSameTitle = (title)=>{
-    for(var i=0; i<notes.length; i++){
-        if(notes[i].title == title){
+const handleSameTitle = (title, indexToRemove)=>{
+    var tempNotes = notes;
+    if(indexToRemove != null){
+        // remove original title from the notes and store temporary
+        tempNotes = [...notes.slice(0,indexToRemove), ...notes.slice(indexToRemove + 1)];
+    }
+    for(var i=0; i<tempNotes.length; i++){
+        if(tempNotes[i].title == title){
             return true;
         }
     }
