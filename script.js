@@ -6,8 +6,8 @@ $(document).ready(function () {
     $('#notesForm').submit((e)=>{
         // prevent the browser from reloading 
         e.preventDefault();
-        var title = $('#noteTitle').val();
-        var content = $('#noteContent').val();
+        var title = escapeHtml($('#noteTitle').val());
+        var content = escapeHtml($('#noteContent').val());
         // validating the input
         if(title?.length>0 && content?.length>0){
             var note = {title:title, content:content}; // create the note object
@@ -75,8 +75,8 @@ const editNote = (index)=>{
         buttons:{
             Save: function(){
                 // save value to the respective note
-                note.title = $('#editTitle').val();
-                note.content = $('#editContent').val();
+                note.title = escapeHtml($('#editTitle').val());
+                note.content = escapeHtml($('#editContent').val());
                 // check if there is any existing note with the same title
                 if(!handleSameTitle(note.title)){
                 dispalayNotes();
@@ -123,4 +123,20 @@ const handleSameTitle = (title)=>{
         }
     }
     return false;
+}
+
+// Function to escape HTML characters to prevent from XSS attacks
+function escapeHtml(text) {
+var map = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#039;'
+};
+
+return text.replace(/[&<>"']/g, function(m) { 
+    console.log(m)
+    return map[m]; 
+});
 }
