@@ -1,8 +1,8 @@
 var notes = []; // array to store the notes
 $(document).ready(function () {
     // display the existing notes
-    dispalayNotes();
-    // add new notes
+    loadNotes(); // automatically load the previous notes
+
     $('#notesForm').submit((e)=>{
         // prevent the browser from reloading 
         e.preventDefault();
@@ -17,7 +17,6 @@ $(document).ready(function () {
         }
     });
 
-    loadNotes(); // automatically load the previous notes
 });
 
 // function to display the existing notes
@@ -56,6 +55,7 @@ const dispalayNotes = ()=>{
 
 // function to save notes to the local storage
 const saveNote = () =>{
+    $("#displayHeader").css('display','block');
     localStorage.setItem('notes', JSON.stringify(notes));
     $('#noteTitle, #noteContent').val(''); // Clear form fields
 }
@@ -94,6 +94,7 @@ const deleteNote = (index)=>{
         notes.splice(index, 1); // removes the particular note from the notes list
         dispalayNotes();
         saveNote();
+        $("#displayHeader").css('display','none');
     }
 }
 
@@ -102,6 +103,9 @@ const loadNotes = () => {
     var storedNotes = localStorage.getItem('notes');
     if(storedNotes){
         notes = JSON.parse(storedNotes);
+        if(notes.length > 0){
+            $("#displayHeader").css('display','block');
+        }
         dispalayNotes();
     }
 }
