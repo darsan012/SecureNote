@@ -4,6 +4,7 @@ $(document).ready(function () {
     dispalayNotes();
     // add new notes
     $('#notesForm').submit((e)=>{
+        // prevent the browser from reloading 
         e.preventDefault();
         var title = $('#noteTitle').val();
         var content = $('#noteContent').val();
@@ -11,10 +12,12 @@ $(document).ready(function () {
         if(title?.length>0 && content?.length>0){
             var note = {title:title, content:content}; // create the note object
             notes.push(note);
-            // clear the form
+            saveNote(); // save the note to the local storage
             dispalayNotes();
         }
-    })
+    });
+
+    loadNotes(); // automatically load the previous notes
 });
 
 // function to display the existing notes
@@ -24,7 +27,6 @@ const dispalayNotes = ()=>{
     // iterate over the notes and display them 
     notes.forEach((note, index) => {
         // create div with note-item classname
-        console.log(note);
         var $noteItem = $('<div class="note-item">')
         // append the notes title and content
         $noteItem.append(`<div class="note-title">${note.title}</div>`);
@@ -51,6 +53,12 @@ const dispalayNotes = ()=>{
     });
 }
 
+
+// function to save notes to the local storage
+const saveNote = () =>{
+    localStorage.setItem('notes', JSON.stringify(notes));
+    $('#noteTitle, #noteContent').val(''); // Clear form fields
+}
 // function to handle the notes modification
 const editNote = (index)=>{
     var note = notes[index];
@@ -65,8 +73,10 @@ const editNote = (index)=>{
                 // save value to the respective note
                 note.title = $('#editTitle').val();
                 note.content = $('#editContent').val();
-                // display the notes after saving
+                // display the notes 
                 dispalayNotes();
+                // save to the local storage
+                saveNote();
                 // close dialouge after saving 
                 $(this).dialog('close');
             },
@@ -82,6 +92,16 @@ const editNote = (index)=>{
 const deleteNote = (index)=>{
     if(confirm('Are you sure you want to delete the selected note?')){
         notes.splice(index, 1); // removes the particular note from the notes list
+        dispalayNotes();
+        saveNote();
+    }
+}
+
+// function to handle the previous notes
+const loadNotes = () => {
+    var storedNotes = localStorage.getItem('notes');
+    if(storedNotes){
+        notes = JSON.parse(storedNotes);
         dispalayNotes();
     }
 }
